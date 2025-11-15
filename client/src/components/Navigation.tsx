@@ -53,7 +53,7 @@ export function Navigation() {
               whileHover={{ scale: 1.05 }}
               data-testid="link-home-logo"
             >
-              <span className="text-primary">Smart Money</span>
+              <span className="text-primary">Nofomo FX</span>
               <span className="text-foreground"> Academy</span>
             </motion.div>
           </Link>
