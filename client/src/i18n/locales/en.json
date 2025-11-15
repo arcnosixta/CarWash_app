@@ -7,7 +7,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Smart Money Academy",
+    "title": "Nofomo FX Academy",
     "subtitle": "Professional Trading Education & Mentorship",
     "description": "Professional Trading Education Based on Smart Money Concepts",
     "joinAcademy": "Join Academy",
@@ -69,17 +69,17 @@
   "testimonials": {
     "title": "What Our Students Say",
     "alex": {
-      "name": "Alex Johnson",
+      "name": "???? ??????",
       "role": "Professional Trader",
       "content": "Smart Money Academy transformed my trading completely. The institutional concepts are game-changing."
     },
     "maria": {
-      "name": "Maria Garcia",
+      "name": "???? ?????",
       "role": "Day Trader",
       "content": "Best trading education I've ever received. The mentorship program is worth every penny."
     },
     "david": {
-      "name": "David Chen",
+      "name": "???????",
       "role": "Swing Trader",
       "content": "Finally understand how the market really works. This academy is the real deal."
     }
@@ -150,22 +150,22 @@
     },
     "teamMembers": {
       "michael": {
-        "name": "Michael Thompson",
+        "name": "Dais",
         "role": "Founder & Lead Instructor",
         "bio": "15+ years of institutional trading experience"
       },
       "sarah": {
-        "name": "Sarah Martinez",
+        "name": "????? ???????",
         "role": "Head of Education",
         "bio": "Former hedge fund analyst, passionate educator"
       },
       "david": {
-        "name": "David Chen",
+        "name": "????? ??????",
         "role": "Technical Analysis Expert",
         "bio": "Specialist in market structure and liquidity"
       },
       "emma": {
-        "name": "Emma Wilson",
+        "name": "???? ?????",
         "role": "Risk Management Specialist",
         "bio": "Expert in position sizing and capital preservation"
       }
