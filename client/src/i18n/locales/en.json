@@ -1,0 +1,219 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "mentorship": "Mentorship",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Smart Money Academy",
+    "subtitle": "Professional Trading Education & Mentorship",
+    "description": "Professional Trading Education Based on Smart Money Concepts",
+    "joinAcademy": "Join Academy",
+    "viewCourses": "View Courses"
+  },
+  "benefits": {
+    "title": "Why Choose Smart Money Academy",
+    "institutional": {
+      "title": "Institutional Knowledge",
+      "description": "Learn how institutional traders move the market"
+    },
+    "practical": {
+      "title": "Practical Approach",
+      "description": "Real-world strategies that work in live markets"
+    },
+    "mentorship": {
+      "title": "Expert Mentorship",
+      "description": "Direct guidance from professional traders"
+    }
+  },
+  "concepts": {
+    "title": "Master Smart Money Concepts",
+    "description": "Understanding how institutional players move the market is the key to consistent profitability"
+  },
+  "courses": {
+    "title": "Our Courses",
+    "allCourses": "All Courses",
+    "filterByLevel": "Filter by Level",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "learnMore": "Learn More",
+    "marketStructure": {
+      "title": "Market Structure",
+      "description": "Identify key market patterns and trends",
+      "duration": "8 weeks"
+    },
+    "liquidity": {
+      "title": "Liquidity",
+      "description": "Master liquidity zones and order flow",
+      "duration": "6 weeks"
+    },
+    "orderFlow": {
+      "title": "Order Flow",
+      "description": "Understand institutional order flow",
+      "duration": "10 weeks"
+    },
+    "riskManagement": {
+      "title": "Risk Management",
+      "description": "Protect your capital effectively",
+      "duration": "4 weeks"
+    },
+    "psychology": {
+      "title": "Trading Psychology",
+      "description": "Develop mental resilience",
+      "duration": "5 weeks"
+    }
+  },
+  "testimonials": {
+    "title": "What Our Students Say",
+    "alex": {
+      "name": "Alex Johnson",
+      "role": "Professional Trader",
+      "content": "Smart Money Academy transformed my trading completely. The institutional concepts are game-changing."
+    },
+    "maria": {
+      "name": "Maria Garcia",
+      "role": "Day Trader",
+      "content": "Best trading education I've ever received. The mentorship program is worth every penny."
+    },
+    "david": {
+      "name": "David Chen",
+      "role": "Swing Trader",
+      "content": "Finally understand how the market really works. This academy is the real deal."
+    }
+  },
+  "cta": {
+    "title": "Ready to Start Your Trading Journey?",
+    "description": "Join thousands of traders who have transformed their trading with Smart Money Concepts",
+    "button": "Get Started Now"
+  },
+  "mentorshipPage": {
+    "hero": "Transform Your Trading with Personal Mentorship",
+    "subtitle": "One-on-one guidance from professional traders",
+    "benefits": "Mentorship Benefits",
+    "personalGuidance": {
+      "title": "Personal Guidance",
+      "description": "Direct access to experienced traders"
+    },
+    "liveTrading": {
+      "title": "Live Trading Sessions",
+      "description": "Watch and learn from real trades"
+    },
+    "accountability": {
+      "title": "Accountability",
+      "description": "Stay on track with regular check-ins"
+    },
+    "progress": "Student Progress",
+    "progressStats": {
+      "winRate": "Average Win Rate",
+      "students": "Students Graduated",
+      "successRate": "Success Rate"
+    },
+    "apply": "Apply for Mentorship",
+    "name": "Full Name",
+    "email": "Email Address",
+    "experience": "Trading Experience",
+    "message": "Why do you want to join?",
+    "submit": "Submit Application",
+    "submitting": "Submitting...",
+    "successTitle": "Application Submitted!",
+    "successMessage": "We will review your application and get back to you soon.",
+    "validationNameMin": "Name must be at least 2 characters",
+    "validationEmailInvalid": "Invalid email address",
+    "validationExperienceMin": "Please provide more details about your experience",
+    "validationMessageMin": "Please tell us more about why you want to join"
+  },
+  "aboutPage": {
+    "mission": "Our Mission",
+    "missionText": "To democratize institutional trading knowledge and empower retail traders with the tools and education they need to succeed in financial markets.",
+    "team": "Meet Our Team",
+    "history": "Our Story",
+    "values": {
+      "mission": {
+        "title": "Our Mission",
+        "description": "To empower traders with institutional knowledge and proven strategies."
+      },
+      "community": {
+        "title": "Community First",
+        "description": "Building a supportive network of like-minded traders."
+      },
+      "growth": {
+        "title": "Continuous Growth",
+        "description": "Always evolving with market dynamics and new insights."
+      },
+      "excellence": {
+        "title": "Excellence",
+        "description": "Committed to delivering the highest quality education."
+      }
+    },
+    "teamMembers": {
+      "michael": {
+        "name": "Michael Thompson",
+        "role": "Founder & Lead Instructor",
+        "bio": "15+ years of institutional trading experience"
+      },
+      "sarah": {
+        "name": "Sarah Martinez",
+        "role": "Head of Education",
+        "bio": "Former hedge fund analyst, passionate educator"
+      },
+      "david": {
+        "name": "David Chen",
+        "role": "Technical Analysis Expert",
+        "bio": "Specialist in market structure and liquidity"
+      },
+      "emma": {
+        "name": "Emma Wilson",
+        "role": "Risk Management Specialist",
+        "bio": "Expert in position sizing and capital preservation"
+      }
+    },
+    "milestones": {
+      "2018": {
+        "event": "Academy Founded",
+        "description": "Started with a vision to democratize trading education"
+      },
+      "2020": {
+        "event": "1,000 Students",
+        "description": "Reached our first major milestone"
+      },
+      "2022": {
+        "event": "Global Expansion",
+        "description": "Extended courses to international markets"
+      },
+      "2024": {
+        "event": "10,000+ Graduates",
+        "description": "Celebrating thousands of successful traders"
+      }
+    }
+  },
+  "contactPage": {
+    "title": "Get in Touch",
+    "subtitle": "Have questions? We'd love to hear from you",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "info": "Contact Information",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "successTitle": "Success!",
+    "successMessage": "Message sent successfully! We'll get back to you soon.",
+    "errorTitle": "Error",
+    "errorMessage": "Failed to send message. Please try again.",
+    "validationNameMin": "Name must be at least 2 characters",
+    "validationEmailInvalid": "Invalid email address",
+    "validationMessageMin": "Message must be at least 10 characters",
+    "quickResponse": "Quick Response",
+    "quickResponseText": "We typically respond within 24 hours during business days."
+  },
+  "footer": {
+    "description": "Professional trading education based on Smart Money Concepts",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved"
+  }
+}
