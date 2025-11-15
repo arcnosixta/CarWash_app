@@ -199,8 +199,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-medium mb-1">{t('contactPage.telegram')}</p>
-                      <a href="https://t.me/smartmoneyacademy" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                        @smartmoneyacademy
+                      <a href="https://t.me/yerzhnf" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                        @yerzhnf
                       </a>
                     </div>
                   </div>
