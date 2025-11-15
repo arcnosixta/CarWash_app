@@ -9,13 +9,13 @@ export default function Home() {
   const benefits = [
     {
       icon: TrendingUp,
-      title: "Market Structure Mastery",
-      description: "Learn to read institutional order flow and identify high-probability trade setups using Smart Money concepts.",
+      title: "Мастерство структуры рынка",
+      description: "Научитесь читать поток институциональных заказов и определять высоковероятные торговые схемы, используя концепции Smart Money.",
     },
     {
       icon: Target,
-      title: "Precision Entry & Exit",
-      description: "Master optimal entry points, stop-loss placement, and profit-taking strategies based on liquidity analysis.",
+      title: "Точный вход и выход",
+      description: "Освойте оптимальные точки входа, размещение стоп-лоссов и стратегии фиксации прибыли на основе анализа ликвидности.",
     },
     {
       icon: Shield,
