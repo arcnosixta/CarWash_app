@@ -18,8 +18,8 @@ export function Footer() {
   const socialLinks = [
     { icon: Linkedin, href: '#', label: 'LinkedIn' },
     { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Youtube, href: '#', label: 'YouTube' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Youtube, href: 'https://www.youtube.com/@nofomofx', label: 'YouTube' },
+    { icon: Instagram, href: 'https://www.instagram.com/nofomo.fx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==', label: 'Instagram' },
   ];
 
   return (
@@ -28,7 +28,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <div className="font-serif text-2xl font-bold mb-4">
-              <span className="text-primary">Smart Money</span>
+              <span className="text-primary">Nofomo FX</span>
               <span className="text-foreground"> Academy</span>
             </div>
             <p className="text-muted-foreground text-sm">
