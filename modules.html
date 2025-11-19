@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модули - Nofomo FX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #00ff6a;
+            --red: #ff3b3b;
+        }
+
+        body.light {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --accent: #00cc55;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header (same as index) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 20px rgba(0, 255, 106, 0.1);
+        }
+
+        body.light header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: '📈';
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .lang-selector select {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .theme-toggle:hover, .lang-selector select:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 150px 5% 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent), #00cc55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modules Section */
+        .modules-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-subtitle {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 3rem;
+        }
+
+        /* Accordion Styles */
+        .accordion-container {
+            margin-bottom: 80px;
+        }
+
+        .accordion-item {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: var(--accent);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            gap: 1rem;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(0, 255, 106, 0.05);
+        }
+
+        .accordion-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .accordion-header h3 {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .accordion-toggle {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: bold;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 800px;
+            padding: 0 2rem 2rem 2rem;
+        }
+
+        .accordion-list {
+            list-style: none;
+            padding-left: 3.5rem;
+        }
+
+        .accordion-list li {
+            color: var(--text-secondary);
+            padding: 0.7rem 0;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .accordion-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Packages Section */
+        .packages-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--accent);
+            margin: 5rem 0 3rem;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .package-card {
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 2px solid transparent;
+            transition: all 0.4s;
+            position: relative;
+            text-align: center;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(0, 255, 106, 0.3);
+        }
+
+        .package-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 255, 106, 0.2);
+        }
+
+        .popular-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            padding: 0.5rem 2rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .package-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-primary);
+            color: var(--accent);
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--accent);
+        }
+
+        .package-badge.popular {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .package-icon {
+            font-size: 4rem;
+            margin: 1rem 0;
+        }
+
+        .package-card h3 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .package-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .package-features {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            color: var(--text-secondary);
+        }
+
+        .feature-item .check {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .feature-item .uncheck {
+            color: red;
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .package-price {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .price-amount {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .price-period {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .package-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .package-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 106, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 2px solid var(--accent);
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        /* Mobile */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accordion-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .accordion-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .accordion-list {
+                padding-left: 1rem;
+            }
+
+            .section-subtitle, .packages-title {
+                font-size: 2rem;
+            }
+
+            .price-amount {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <span>Nofomo FX</span>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" data-lang="nav_home">Главная</a></li>
+                <li><a href="modules.html" data-lang="nav_modules">Модули</a></li>
+                <li><a href="cases.html" data-lang="nav_cases">Кейсы</a></li>
+            </ul>
+
+            <div class="controls">
+                <div class="lang-selector">
+                    <select id="langSelect">
+                        <option value="ru">Rus</option>
+                        <option value="kz">Kaz</option>
+                        <option value="en">Eng</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 data-lang="modules_title">Программа обучения</h1>
+        <p data-lang="modules_subtitle">Полный курс профессионального трейдинга от основ до продвинутых стратегий</p>
+    </div>
+
+    <!-- Modules Section -->
+    <section class="modules-section">
+        <h2 class="section-subtitle" data-lang="curriculum_title">Что входит в обучение</h2>
+        
+        <div class="accordion-container">
+            <!-- Module 1 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">📚</div>
+                    <h3 data-lang="acc_module1_title">Модуль 1: Основы финансовых рынков</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module1_1">Введение в финансовые рынки и инструменты</li>
+                        <li data-lang="acc_module1_2">Типы рынков: Форекс, акции, криптовалюты, товары</li>
+                        <li data-lang="acc_module1_3">Участники рынка и их роли</li>
+                        <li data-lang="acc_module1_4">Терминология трейдинга</li>
+                        <li data-lang="acc_module1_5">Выбор брокера и открытие счета</li>
+                        <li data-lang="acc_module1_6">Торговые платформы: MetaTrader 4/5, TradingView</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">📊</div>
+                    <h3 data-lang="acc_module2_title">Модуль 2: Технический анализ</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module2_1">Основы технического анализа</li>
+                        <li data-lang="acc_module2_2">Типы графиков: линейные, бары, японские свечи</li>
+                        <li data-lang="acc_module2_3">Свечные паттерны и их интерпретация</li>
+                        <li data-lang="acc_module2_4">Тренды, уровни поддержки и сопротивления</li>
+                        <li data-lang="acc_module2_5">Индикаторы: MA, RSI, MACD, Bollinger Bands</li>
+                        <li data-lang="acc_module2_6">Паттерны Price Action</li>
+                        <li data-lang="acc_module2_7">Объемный анализ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">📰</div>
+                    <h3 data-lang="acc_module3_title">Модуль 3: Фундаментальный анализ</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module3_1">Экономические индикаторы и их влияние</li>
+                        <li data-lang="acc_module3_2">Центральные банки и монетарная политика</li>
+                        <li data-lang="acc_module3_3">Новости и их влияние на рынки</li>
+                        <li data-lang="acc_module3_4">Экономический календарь</li>
+                        <li data-lang="acc_module3_5">Анализ отчетностей компаний</li>
+                        <li data-lang="acc_module3_6">Геополитические факторы</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">⚡</div>
+                    <h3 data-lang="acc_module4_title">Модуль 4: Торговые стратегии</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module4_1">Трендовые стратегии</li>
+                        <li data-lang="acc_module4_2">Контртрендовые стратегии</li>
+                        <li data-lang="acc_module4_3">Скальпинг и дейтрейдинг</li>
+                        <li data-lang="acc_module4_4">Свинг-трейдинг</li>
+                        <li data-lang="acc_module4_5">Позиционная торговля</li>
+                        <li data-lang="acc_module4_6">Стратегии на новостях</li>
+                        <li data-lang="acc_module4_7">Арбитраж и хеджирование</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">🎯</div>
+                    <h3 data-lang="acc_module5_title">Модуль 5: Управление рисками</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module5_1">Риск-менеджмент: основные принципы</li>
+                        <li data-lang="acc_module5_2">Расчет размера позиции</li>
+                        <li data-lang="acc_module5_3">Stop Loss и Take Profit</li>
+                        <li data-lang="acc_module5_4">Соотношение риск/прибыль</li>
+                        <li data-lang="acc_module5_5">Управление капиталом (Money Management)</li>
+                        <li data-lang="acc_module5_6">Диверсификация портфеля</li>
+                        <li data-lang="acc_module5_7">Психология убытков</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">🧠</div>
+                    <h3 data-lang="acc_module6_title">Модуль 6: Психология трейдинга</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module6_1">Эмоциональный контроль</li>
+                        <li data-lang="acc_module6_2">Дисциплина и следование плану</li>
+                        <li data-lang="acc_module6_3">Страх и жадность в трейдинге</li>
+                        <li data-lang="acc_module6_4">Работа с убытками и просадками</li>
+                        <li data-lang="acc_module6_5">Развитие трейдерского мышления</li>
+                        <li data-lang="acc_module6_6">Ведение торгового журнала</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">💰</div>
+                    <h3 data-lang="acc_module7_title">Модуль 7: Специализированные рынки</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module7_1">Форекс: особенности валютного рынка</li>
+                        <li data-lang="acc_module7_2">Криптовалюты: Bitcoin, Ethereum, альткоины</li>
+                        <li data-lang="acc_module7_3">Фондовый рынок: акции и индексы</li>
+                        <li data-lang="acc_module7_4">Товарные рынки: золото, нефть</li>
+                        <li data-lang="acc_module7_5">Деривативы: фьючерсы и опционы</li>
+                        <li data-lang="acc_module7_6">DeFi и NFT</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="accordion-item fade-in">
+                <div class="accordion-header">
+                    <div class="accordion-icon">🤖</div>
+                    <h3 data-lang="acc_module8_title">Модуль 8: Алгоритмическая торговля</h3>
+                    <span class="accordion-toggle">+</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="accordion-list">
+                        <li data-lang="acc_module8_1">Введение в алгоритмическую торговлю</li>
+                        <li data-lang="acc_module8_2">Создание торговых роботов</li>
+                        <li data-lang="acc_module8_3">Бэктестинг стратегий</li>
+                        <li data-lang="acc_module8_4">Оптимизация торговых систем</li>
+                        <li data-lang="acc_module8_5">API биржи и автоматизация</li>
+                        <li data-lang="acc_module8_6">Мониторинг и управление ботами</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages Section -->
+        <h2 class="packages-title" data-lang="packages_title">Выберите свой пакет обучения</h2>
+        
+        <div class="packages-grid">
+            <!-- Standard Package -->
+            <div class="package-card fade-in">
+                <div class="package-badge" data-lang="package_standard_badge">Стандарт</div>
+                <div class="package-icon">📚</div>
+                <h3 data-lang="package_standard_title">Стандартный пакет</h3>
+                <p class="package-desc" data-lang="package_standard_desc">Полный курс обучения с доступом ко всем материалам</p>
+                <div class="package-features">
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_standard_f1">ПОЖИНЗЕННЫЙ ДОСТУП К МАТЕРИАЛАМ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_standard_f2">ДОСТУП К СЕТАПАМ МЕНТОРОВ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_standard_f3">ОБЩЕНИЕ С МЕНТОРАМИ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f4">ОБНОВЛЕНИЕ МАТЕРИАЛА</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f5">ONLINE КОНФЕРЕНЦИЙ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f6">ДОМАШНИЕ ЗАДАНИЯ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f7">ОПТИМИЗАЦИЯ ТОРГОВОЙ СТРАТЕГИИ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f8">ПОМОЩ В ПРОХОЖДЕНИИ ПРОП-ЧЕЛЛЕНДЖА</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="uncheck">✘</span>
+                        <span data-lang="package_standard_f9s">ФИНАЛЬНЫЙ ЭКЗАМЕН</span>
+                    </div>
+
+                    <div class="package-price">
+                        <span class="price-amount">$699</span>
+                        <span class="price-period" data-lang="price_once">единоразово</span>
+                    </div>
+                
+                <a href="#" class="package-button" data-lang="btn_choose">Выбрать пакет</a>
+            </div>
+        </div>
+            <!-- Pro Package -->
+            <div class="package-card featured fade-in">
+                <div class="package-badge popular" data-lang="package_pro_badge">Про</div>
+                <div class="popular-label" data-lang="popular_choice">Популярный выбор</div>
+                <div class="package-icon">👑</div>
+                <h3 data-lang="package_pro_title">PRO пакет</h3>
+                <p class="package-desc" data-lang="package_pro_desc">Максимальная эффективность с персональным менторством</p>
+                
+                <div class="package-features">
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f1">Всё из Стандартного пакета</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f2">Личный наставник-трейдер</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f3">Еженедельные вебинары</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f4">Разбор ваших сделок</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f5">Торговые сигналы в реальном времени</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f6">VIP чат с трейдерами</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f7">Пожизненный доступ к материалам</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f8">Готовые торговые стратегии</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <span data-lang="package_pro_f9">Приоритетная поддержка 24/7</span>
+                    </div>
+                </div>
+
+                <div class="package-price">
+                    <span class="price-amount">$1,999</span>
+                    <span class="price-period" data-lang="price_once">единоразово</span>
+                </div>
+                
+                <a href="#" class="package-button" data-lang="btn_choose">Выбрать пакет</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Nofomo FX. <span data-lang="footer_rights">Все права защищены</span></p>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            ru: {
+                nav_home: 'Главная',
+                nav_modules: 'Модули',
+                nav_cases: 'Кейсы',
+                modules_title: 'Программа обучения',
+                modules_subtitle: 'Полный курс профессионального трейдинга от основ до продвинутых стратегий',
+                curriculum_title: 'Что входит в обучение',
+                
+                // Accordion Module 1
+                acc_module1_title: 'Модуль 1: Основы финансовых рынков',
+                acc_module1_1: 'Введение в финансовые рынки и инструменты',
+                acc_module1_2: 'Типы рынков: Форекс, акции, криптовалюты, товары',
+                acc_module1_3: 'Участники рынка и их роли',
+                acc_module1_4: 'Терминология трейдинга',
+                acc_module1_5: 'Выбор брокера и открытие счета',
+                acc_module1_6: 'Торговые платформы: MetaTrader 4/5, TradingView',
+                
+                // Accordion Module 2
+                acc_module2_title: 'Модуль 2: Технический анализ',
+                acc_module2_1: 'Основы технического анализа',
+                acc_module2_2: 'Типы графиков: линейные, бары, японские свечи',
+                acc_module2_3: 'Свечные паттерны и их интерпретация',
+                acc_module2_4: 'Тренды, уровни поддержки и сопротивления',
+                acc_module2_5: 'Индикаторы: MA, RSI, MACD, Bollinger Bands',
+                acc_module2_6: 'Паттерны Price Action',
+                acc_module2_7: 'Объемный анализ',
+                
+                // Accordion Module 3
+                acc_module3_title: 'Модуль 3: Фундаментальный анализ',
+                acc_module3_1: 'Экономические индикаторы и их влияние',
+                acc_module3_2: 'Центральные банки и монетарная политика',
+                acc_module3_3: 'Новости и их влияние на рынки',
+                acc_module3_4: 'Экономический календарь',
+                acc_module3_5: 'Анализ отчетностей компаний',
+                acc_module3_6: 'Геополитические факторы',
+                
+                // Accordion Module 4
+                acc_module4_title: 'Модуль 4: Торговые стратегии',
+                acc_module4_1: 'Трендовые стратегии',
+                acc_module4_2: 'Контртрендовые стратегии',
+                acc_module4_3: 'Скальпинг и дейтрейдинг',
+                acc_module4_4: 'Свинг-трейдинг',
+                acc_module4_5: 'Позиционная торговля',
+                acc_module4_6: 'Стратегии на новостях',
+                acc_module4_7: 'Арбитраж и хеджирование',
+                
+                // Accordion Module 5
+                acc_module5_title: 'Модуль 5: Управление рисками',
+                acc_module5_1: 'Риск-менеджмент: основные принципы',
+                acc_module5_2: 'Расчет размера позиции',
+                acc_module5_3: 'Stop Loss и Take Profit',
+                acc_module5_4: 'Соотношение риск/прибыль',
+                acc_module5_5: 'Управление капиталом (Money Management)',
+                acc_module5_6: 'Диверсификация портфеля',
+                acc_module5_7: 'Психология убытков',
+                
+                // Accordion Module 6
+                acc_module6_title: 'Модуль 6: Психология трейдинга',
+                acc_module6_1: 'Эмоциональный контроль',
+                acc_module6_2: 'Дисциплина и следование плану',
+                acc_module6_3: 'Страх и жадность в трейдинге',
+                acc_module6_4: 'Работа с убытками и просадками',
+                acc_module6_5: 'Развитие трейдерского мышления',
+                acc_module6_6: 'Ведение торгового журнала',
+                
+                // Accordion Module 7
+                acc_module7_title: 'Модуль 7: Специализированные рынки',
+                acc_module7_1: 'Форекс: особенности валютного рынка',
+                acc_module7_2: 'Криптовалюты: Bitcoin, Ethereum, альткоины',
+                acc_module7_3: 'Фондовый рынок: акции и индексы',
+                acc_module7_4: 'Товарные рынки: золото, нефть',
+                acc_module7_5: 'Деривативы: фьючерсы и опционы',
+                acc_module7_6: 'DeFi и NFT',
+                
+                // Accordion Module 8
+                acc_module8_title: 'Модуль 8: Алгоритмическая торговля',
+                acc_module8_1: 'Введение в алгоритмическую торговлю',
+                acc_module8_2: 'Создание торговых роботов',
+                acc_module8_3: 'Бэктестинг стратегий',
+                acc_module8_4: 'Оптимизация торговых систем',
+                acc_module8_5: 'API биржи и автоматизация',
+                acc_module8_6: 'Мониторинг и управление ботами',
+                
+                // Packages
+                packages_title: 'Выберите свой пакет обучения',
+                package_standard_badge: 'Стандарт',
+                package_standard_title: 'Стандартный пакет',
+                package_standard_desc: 'Пожизненный доступ к материалам',
+                package_pro_f1: 'ПОЖИНЗЕННЫЙ ДОСТУП К МАТЕРИАЛАМ',
+                package_pro_f2: 'ДОСТУП К СЕТАПАМ МЕНТОРОВ',
+                package_pro_f3: 'ОБЩЕНИЕ С МЕНТОРАМИ',
+                package_pro_f4: 'ОБНОВЛЕНИЕ МАТЕРИАЛА',
+                package_pro_f5: 'ONLINE КОНФЕРЕНЦИЙ',
+                package_pro_f6: 'ДОМАШНИЕ ЗАДАНИЯ',
+                package_pro_f7: 'ОПТИМИЗАЦИЯ ТОРГОВОЙ СТРАТЕГИИ',
+                package_pro_f8: 'ПОМОЩ В ПРОХОЖДЕНИИ ПРОП-ЧЕЛЛЕНДЖА',
+                package_pro_f9: 'ФИНАЛЬНЫЙ ЭКЗАМЕН',
+                
+                package_pro_badge: 'Про',
+                popular_choice: 'Популярный выбор',
+                package_pro_title: 'PRO пакет',
+                package_pro_desc: 'Максимальная эффективность с персональным менторством',
+                package_pro_f1: 'ПОЖИНЗЕННЫЙ ДОСТУП К МАТЕРИАЛАМ',
+                package_pro_f2: 'ДОСТУП К СЕТАПАМ МЕНТОРОВ',
+                package_pro_f3: 'ОБЩЕНИЕ С МЕНТОРАМИ',
+                package_pro_f4: 'ОБНОВЛЕНИЕ МАТЕРИАЛА',
+                package_pro_f5: 'ONLINE КОНФЕРЕНЦИЙ',
+                package_pro_f6: 'ДОМАШНИЕ ЗАДАНИЯ',
+                package_pro_f7: 'ОПТИМИЗАЦИЯ ТОРГОВОЙ СТРАТЕГИИ',
+                package_pro_f8: 'ПОМОЩ В ПРОХОЖДЕНИИ ПРОП-ЧЕЛЛЕНДЖА',
+                package_pro_f9: 'ФИНАЛЬНЫЙ ЭКЗАМЕН',
+                
+                price_once: 'единоразово',
+                btn_choose: 'Выбрать пакет',
+                footer_rights: 'Все права защищены'
+            },
+            kz: {
+                nav_home: 'Басты бет',
+                nav_modules: 'Модульдер',
+                nav_cases: 'Кейстер',
+                modules_title: 'Оқу бағдарламасы',
+                modules_subtitle: 'Негізден жоғары стратегияларға дейін кәсіби трейдингтің толық курсы',
+                curriculum_title: 'Оқуға не кіреді',
+                
+                acc_module1_title: 'Модуль 1: Қаржылық нарықтардың негіздері',
+                acc_module1_1: 'Қаржылық нарықтар мен құралдарға кіріспе',
+                acc_module1_2: 'Нарық түрлері: Форекс, акциялар, криптовалюталар, тауарлар',
+                acc_module1_3: 'Нарық қатысушылары және олардың рөлдері',
+                acc_module1_4: 'Трейдинг терминологиясы',
+                acc_module1_5: 'Брокерді таңдау және шотты ашу',
+                acc_module1_6: 'Сауда платформалары: MetaTrader 4/5, TradingView',
+                
+                acc_module2_title: 'Модуль 2: Техникалық талдау',
+                acc_module2_1: 'Техникалық талдау негіздері',
+                acc_module2_2: 'График түрлері: сызықты, барлар, жапон шамдары',
+                acc_module2_3: 'Шам паттерндері және олардың түсіндірмесі',
+                acc_module2_4: 'Трендтер, қолдау және кедергі деңгейлері',
+                acc_module2_5: 'Индикаторлар: MA, RSI, MACD, Bollinger Bands',
+                acc_module2_6: 'Price Action паттерндері',
+                acc_module2_7: 'Көлемдік талдау',
+                
+                acc_module3_title: 'Модуль 3: Фундаменталды талдау',
+                acc_module3_1: 'Экономикалық индикаторлар және олардың әсері',
+                acc_module3_2: 'Орталық банктер және монетарлық саясат',
+                acc_module3_3: 'Жаңалықтар және олардың нарықтарға әсері',
+                acc_module3_4: 'Экономикалық календарь',
+                acc_module3_5: 'Компаниялардың есептерін талдау',
+                acc_module3_6: 'Геосаяси факторлар',
+                
+                acc_module4_title: 'Модуль 4: Сауда стратегиялары',
+                acc_module4_1: 'Трендті стратегиялар',
+                acc_module4_2: 'Контртрендті стратегиялар',
+                acc_module4_3: 'Скальпинг және дейтрейдинг',
+                acc_module4_4: 'Свинг-трейдинг',
+                acc_module4_5: 'Позициялық сауда',
+                acc_module4_6: 'Жаңалықтар бойынша стратегиялар',
+                acc_module4_7: 'Арбитраж және хеджирлеу',
+                
+                acc_module5_title: 'Модуль 5: Тәуекелдерді басқару',
+                acc_module5_1: 'Тәуекелдерді басқару: негізгі принциптер',
+                acc_module5_2: 'Позиция өлшемін есептеу',
+                acc_module5_3: 'Stop Loss және Take Profit',
+                acc_module5_4: 'Тәуекел/пайда қатынасы',
+                acc_module5_5: 'Капиталды басқару (Money Management)',
+                acc_module5_6: 'Портфельді диверсификациялау',
+                acc_module5_7: 'Шығындардың психологиясы',
+                
+                acc_module6_title: 'Модуль 6: Трейдинг психологиясы',
+                acc_module6_1: 'Эмоционалды бақылау',
+                acc_module6_2: 'Тәртіп және жоспарға сәйкестік',
+                acc_module6_3: 'Трейдингтегі қорқыныш пен ашкөздік',
+                acc_module6_4: 'Шығындармен және құлдыраулармен жұмыс',
+                acc_module6_5: 'Трейдерлік ойлауды дамыту',
+                acc_module6_6: 'Сауда журналын жүргізу',
+                
+                acc_module7_title: 'Модуль 7: Мамандандырылған нарықтар',
+                acc_module7_1: 'Форекс: валюта нарығының ерекшеліктері',
+                acc_module7_2: 'Криптовалюталар: Bitcoin, Ethereum, альткоиндер',
+                acc_module7_3: 'Қор нарығы: акциялар және индекстер',
+                acc_module7_4: 'Тауар нарықтары: алтын, мұнай',
+                acc_module7_5: 'Деривативтер: фьючерстер мен опциондар',
+                acc_module7_6: 'DeFi және NFT',
+                
+                acc_module8_title: 'Модуль 8: Алгоритмдік сауда',
+                acc_module8_1: 'Алгоритмдік саудаға кіріспе',
+                acc_module8_2: 'Сауда роботтарын жасау',
+                acc_module8_3: 'Стратегияларды бэктестинг',
+                acc_module8_4: 'Сауда жүйелерін оңтайландыру',
+                acc_module8_5: 'Биржаның API және автоматтандыру',
+                acc_module8_6: 'Боттарды мониторинг және басқару',
+                
+                packages_title: 'Өзіңіздің оқу пакетіңізді таңдаңыз',
+                package_standard_badge: 'Стандарт',
+                package_standard_title: 'Стандартты пакет',
+                package_standard_desc: 'Барлық материалдарға қол жеткізуі бар толық оқу курсы',
+                package_standard_f1: 'Барлық 8 модульге қол жеткізу',
+                package_standard_f2: 'Видеосабақтар және презентациялар',
+                package_standard_f3: 'Практикалық тапсырмалар',
+                package_standard_f4: 'Оқу материалдарына 1 жыл қол жеткізу',
+                package_standard_f5: 'Жалпы қолдау чаты',
+                package_standard_f6: 'Аяқтау сертификаты',
+                package_standard_f7: 'Тәжірибе үшін демо-шот',
+                
+                package_pro_badge: 'Про',
+                popular_choice: 'Танымал таңдау',
+                package_pro_title: 'PRO пакет',
+                package_pro_desc: 'Жеке менторствомен максималды тиімділік',
+                package_pro_f1: 'Стандартты пакеттегінің бәрі',
+                package_pro_f2: 'Жеке тәлімгер-трейдер',
+                package_pro_f3: 'Апта сайынғы вебинарлар',
+                package_pro_f4: 'Сіздің мәмілелеріңізді талдау',
+                package_pro_f5: 'Нақты уақыттағы сауда сигналдары',
+                package_pro_f6: 'Трейдерлермен VIP чат',
+                package_pro_f7: 'Материалдарға өмір бойғы қол жеткізу',
+                package_pro_f8: 'Дайын сауда стратегиялары',
+                package_pro_f9: 'Басымдықты қолдау 24/7',
+                
+                price_once: 'бір реттік',
+                btn_choose: 'Пакетті таңдау',
+                footer_rights: 'Барлық құқықтар қорғалған'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_modules: 'Modules',
+                nav_cases: 'Cases',
+                modules_title: 'Training Program',
+                modules_subtitle: 'Complete professional trading course from basics to advanced strategies',
+                curriculum_title: 'What\'s Included in Training',
+                
+                acc_module1_title: 'Module 1: Financial Markets Fundamentals',
+                acc_module1_1: 'Introduction to financial markets and instruments',
+                acc_module1_2: 'Market types: Forex, stocks, cryptocurrencies, commodities',
+                acc_module1_3: 'Market participants and their roles',
+                acc_module1_4: 'Trading terminology',
+                acc_module1_5: 'Choosing a broker and opening an account',
+                acc_module1_6: 'Trading platforms: MetaTrader 4/5, TradingView',
+                
+                acc_module2_title: 'Module 2: Technical Analysis',
+                acc_module2_1: 'Technical analysis basics',
+                acc_module2_2: 'Chart types: line, bars, Japanese candlesticks',
+                acc_module2_3: 'Candlestick patterns and interpretation',
+                acc_module2_4: 'Trends, support and resistance levels',
+                acc_module2_5: 'Indicators: MA, RSI, MACD, Bollinger Bands',
+                acc_module2_6: 'Price Action patterns',
+                acc_module2_7: 'Volume analysis',
+                
+                acc_module3_title: 'Module 3: Fundamental Analysis',
+                acc_module3_1: 'Economic indicators and their impact',
+                acc_module3_2: 'Central banks and monetary policy',
+                acc_module3_3: 'News and their market impact',
+                acc_module3_4: 'Economic calendar',
+                acc_module3_5: 'Company earnings analysis',
+                acc_module3_6: 'Geopolitical factors',
+                
+                acc_module4_title: 'Module 4: Trading Strategies',
+                acc_module4_1: 'Trend-following strategies',
+                acc_module4_2: 'Counter-trend strategies',
+                acc_module4_3: 'Scalping and day trading',
+                acc_module4_4: 'Swing trading',
+                acc_module4_5: 'Position trading',
+                acc_module4_6: 'News trading strategies',
+                acc_module4_7: 'Arbitrage and hedging',
+                
+                acc_module5_title: 'Module 5: Risk Management',
+                acc_module5_1: 'Risk management: core principles',
+                acc_module5_2: 'Position sizing calculation',
+                acc_module5_3: 'Stop Loss and Take Profit',
+                acc_module5_4: 'Risk/reward ratio',
+                acc_module5_5: 'Capital management (Money Management)',
+                acc_module5_6: 'Portfolio diversification',
+                acc_module5_7: 'Psychology of losses',
+                
+                acc_module6_title: 'Module 6: Trading Psychology',
+                acc_module6_1: 'Emotional control',
+                acc_module6_2: 'Discipline and following the plan',
+                acc_module6_3: 'Fear and greed in trading',
+                acc_module6_4: 'Dealing with losses and drawdowns',
+                acc_module6_5: 'Developing trader mindset',
+                acc_module6_6: 'Maintaining trading journal',
+                
+                acc_module7_title: 'Module 7: Specialized Markets',
+                acc_module7_1: 'Forex: currency market specifics',
+                acc_module7_2: 'Cryptocurrencies: Bitcoin, Ethereum, altcoins',
+                acc_module7_3: 'Stock market: stocks and indices',
+                acc_module7_4: 'Commodity markets: gold, oil',
+                acc_module7_5: 'Derivatives: futures and options',
+                acc_module7_6: 'DeFi and NFT',
+                
+                acc_module8_title: 'Module 8: Algorithmic Trading',
+                acc_module8_1: 'Introduction to algorithmic trading',
+                acc_module8_2: 'Creating trading bots',
+                acc_module8_3: 'Strategy backtesting',
+                acc_module8_4: 'Trading system optimization',
+                acc_module8_5: 'Exchange API and automation',
+                acc_module8_6: 'Bot monitoring and management',
+                
+                packages_title: 'Choose Your Training Package',
+                package_standard_badge: 'Standard',
+                package_standard_title: 'Standard Package',
+                package_standard_desc: 'Complete training course with access to all materials',
+                package_standard_f1: 'Access to all 8 modules',
+                package_standard_f2: 'Video lessons and presentations',
+                package_standard_f3: 'Practical assignments',
+                package_standard_f4: '1 year access to learning materials',
+                package_standard_f5: 'General support chat',
+                package_standard_f6: 'Completion certificate',
+                package_standard_f7: 'Demo account for practice',
+                
+                package_pro_badge: 'Pro',
+                popular_choice: 'Popular Choice',
+                package_pro_title: 'PRO Package',
+                package_pro_desc: 'Maximum efficiency with personal mentorship',
+                package_pro_f1: 'Everything from Standard package',
+                package_pro_f2: 'Personal mentor-trader',
+                package_pro_f3: 'Weekly webinars',
+                package_pro_f4: 'Analysis of your trades',
+                package_pro_f5: 'Real-time trading signals',
+                package_pro_f6: 'VIP chat with traders',
+                package_pro_f7: 'Lifetime access to materials',
+                package_pro_f8: 'Ready trading strategies',
+                package_pro_f9: 'Priority support 24/7',
+                
+                price_once: 'one-time',
+                btn_choose: 'Choose Package',
+                footer_rights: 'All rights reserved'
+            }
+        };
+
+        // Language switching
+        const langSelect = document.getElementById('langSelect');
+        const savedLang = localStorage.getItem('language') || 'ru';
+        langSelect.value = savedLang;
+        updateLanguage(savedLang);
+
+        langSelect.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            localStorage.setItem('language', lang);
+            updateLanguage(lang);
+        });
+
+        function updateLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Theme switching
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(accordionItem => {
+                    accordionItem.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
